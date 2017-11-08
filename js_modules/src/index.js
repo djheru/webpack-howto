@@ -1,6 +1,9 @@
-import sum from './sum';
-import './image_viewer';
+const button = document.createElement('button');
+button.innerText = 'Click Me';
+button.onclick = () => {
+	System.import('./image_viewer').then(({ default: showImage }) => {
+		showImage();
+	});
+};
 
-const total = sum(3, 6);
-
-console.log(total);
+document.body.appendChild(button);
