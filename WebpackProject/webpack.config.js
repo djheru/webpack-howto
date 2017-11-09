@@ -1,4 +1,5 @@
 var webpack = require('webpack');
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 var path = require('path');
 
 const VENDOR_LIBS = [
@@ -29,8 +30,7 @@ module.exports = {
 		]
 	},
 	plugins: [
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'vendor',
-		})
+		new webpack.optimize.CommonsChunkPlugin({ name: 'vendor' }),
+		new HtmlWebpackPlugin({ template: './src/index.html' })
 	]
 };
