@@ -9,7 +9,11 @@ rm dist/main.js src/index.js
 touch config/webpack.dev.js
 ```
 
-#### Basic webpack options
+### Basic webpack options
+
+##### To run it:
+
+`npx webpack-dev-server --config=config/webpack.dev.js`
 
 ```javascript
 const path = require('path');
@@ -32,6 +36,40 @@ module.exports = {
 };
 
 ```
+
+
+### Add CSS Loaders
 ```
-npx webpack-dev-server --config=config/webpack.dev.js
-```
+
+npm i style-loader css-loader
+
+# Updated config
+const path = require('path');
+
+module.exports = {
+  entry: {
+    main: './src/main.js'
+  },
+  mode: 'development',
+  output: {
+    filename: '[name]-bundle.js',
+    path: path.resolve(__dirname, '../dist/js'),
+    publicPath: '/js'
+  },
+  devServer: {
+    contentBase: 'dist',
+    port: 8000,
+    publicPath: '/js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [// run in reverse order
+          { loader: 'style-loader' }, // second, inject into html
+          { loader: 'css-loader' } // first, lint and load css
+        ]
+      }
+    ]
+  }
+};
