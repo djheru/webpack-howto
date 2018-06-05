@@ -89,3 +89,9 @@ module.exports = {
     }
 }
 
+```
+
+## HTML Loader
+```
+npm i html-loader extract-loader file-loader
+
