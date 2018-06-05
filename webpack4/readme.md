@@ -1,3 +1,7 @@
+# Webpack 4 Beyond the Basics
+
+## Initial Setup
+
 ```
 npm i -g webpack webpack-cli
 touch src/index.js dist/index.html
@@ -9,11 +13,9 @@ rm dist/main.js src/index.js
 touch config/webpack.dev.js
 ```
 
-### Basic webpack options
+## Basic webpack options
 
-##### To run it:
-
-`npx webpack-dev-server --config=config/webpack.dev.js`
+To run it: `npx webpack-dev-server --config=config/webpack.dev.js`
 
 ```javascript
 const path = require('path');
@@ -38,9 +40,8 @@ module.exports = {
 ```
 
 
-### Add CSS Loaders
+## Add CSS Loaders
 ```
-
 npm i style-loader css-loader
 
 # Updated config
@@ -73,3 +74,18 @@ module.exports = {
     ]
   }
 };
+```
+
+## Display Errors in Browser
+
+```
+{
+    ...,
+    devServer: {
+        contentBase: 'dist',
+        port: 8000,
+        publicPath: '/js',
+        overlay: true
+    }
+}
+

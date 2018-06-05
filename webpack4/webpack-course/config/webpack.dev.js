@@ -13,7 +13,8 @@ module.exports = {
   devServer: {
     contentBase: 'dist',
     port: 8000,
-    publicPath: '/js'
+    publicPath: '/js',
+    overlay: true
   },
   module: {
     rules: [
