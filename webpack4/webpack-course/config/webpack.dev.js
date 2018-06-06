@@ -30,7 +30,13 @@ module.exports = {
         use: [
           { loader: 'file-loader', options: { name: '[name].html' } }, // loads up html files
           { loader: 'extract-loader' }, // extract into a separate file
-          { loader: 'html-loader' } // lint and load html
+          { loader: 'html-loader', options: { attrs: ['img:src']} } // lint and load html
+        ]
+      },
+      {
+        test: /\.(jpg|gif|png)$/,
+        use: [
+          { loader: 'file-loader', options: { name: 'images/[name].[ext]' }}
         ]
       }
     ]
