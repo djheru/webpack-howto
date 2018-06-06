@@ -19,6 +19,13 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.js$/,
+        use: [
+          { loader: 'babel-loader' }
+        ],
+        exclude: /node_modules/
+      },
+      {
         test: /\.css$/,
         use: [// run in reverse order
           { loader: 'style-loader' }, // second, inject into html
