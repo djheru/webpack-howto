@@ -16,7 +16,7 @@ const staticMiddleware = express.static('dist');
 server.use(devMiddleware);
 server.use(hotMiddleware);
 server.use(staticMiddleware);
-
+debugger;
 server.listen(8001, () => {
   console.log('server listening on port 8001');
 });

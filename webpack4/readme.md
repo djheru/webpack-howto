@@ -334,3 +334,14 @@ module.exports = {
 };
 
 ```
+
+## Debugging in the Browser
+
+- Add --inspect flag to nodemon command
+    - `nodemon --inspect --watch config --watch src/server src/server/main.js`
+- Run `npm run dev` - notice the debugger output
+- In chrome dev tools, look for the green node logo, click it, see the debugger
+- Add `debugger;` to express.js before the `server.listen`
+- Note how the node devtools switches to the "sources" tab and takes you to the breakpoint in code
+- Add `debugger;` to the client code. See the sources tab on the regular devtools does the thing
+
