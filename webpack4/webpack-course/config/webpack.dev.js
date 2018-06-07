@@ -1,4 +1,6 @@
 const path = require('path');
+const webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -14,7 +16,11 @@ module.exports = {
     contentBase: 'dist',
     port: 8000,
     publicPath: '/',
-    overlay: true // display errors on browser
+    overlay: true, // display errors on browser
+    stats: {
+      colors: true
+    },
+    hot: true
   },
   module: {
     rules: [
@@ -35,8 +41,9 @@ module.exports = {
       {
         test: /\.html$/,
         use: [
-          { loader: 'file-loader', options: { name: '[name].html' } }, // loads up html files
-          { loader: 'extract-loader' }, // extract into a separate file
+          // Using HTMLWebpackPlugin instead
+          // { loader: 'file-loader', options: { name: '[name].html' } }, // loads up html files
+          // { loader: 'extract-loader' }, // extract into a separate file
           { loader: 'html-loader', options: { attrs: ['img:src']} } // lint and load html
         ]
       },
@@ -47,5 +54,11 @@ module.exports = {
         ]
       }
     ]
-  }
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HTMLWebpackPlugin({
+      template: './src/index.html'
+    })
+  ]
 };

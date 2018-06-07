@@ -229,3 +229,108 @@ var a = async (args) => {
 a({ a: 1, b: 'foo' });
 
 ```
+
+## Custom Webpack Dev Server w/ Hot Reloading
+
+```
+npm i express weebpack-dev-middleware webpack-hot-middleware html-webpack-plugin
+npm i -g nodemon
+mkdir src/server
+touch src/server/main.js
+touch src/server/express.js
+
+# server/main.js
+require('babel-register');
+require('./express');
+
+# server/express.js
+import express from 'express';
+import path from 'path';
+import webpack from 'webpack';
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import config from '../../config/webpack.dev';
+
+const server = express();
+
+const compiler = webpack(config);
+const devMiddleware = webpackDevMiddleware(compiler, config.devServer);
+const hotMiddleware = webpackHotMiddleware(compiler);
+const staticMiddleware = express.static('dist');
+
+// Needs to be dev, hot, static
+server.use(devMiddleware);
+server.use(hotMiddleware);
+server.use(staticMiddleware);
+
+server.listen(8001, () => {
+  console.log('server listening on port 8001');
+});
+
+# Updated webpack config
+const path = require('path');
+const webpack = require('webpack');
+const HTMLWebpackPlugin = require('html-webpack-plugin');
+
+module.exports = {
+  entry: {
+    main: [ './src/main.js' ]
+  },
+  mode: 'development',
+  output: {
+    filename: '[name]-bundle.js',
+    path: path.resolve(__dirname, '../dist'),
+    publicPath: '/'
+  },
+  devServer: {
+    contentBase: 'dist',
+    port: 8000,
+    publicPath: '/',
+    overlay: true, // display errors on browser
+    stats: {
+      colors: true
+    },
+    hot: true
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: [
+          { loader: 'babel-loader' }
+        ],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.css$/,
+        use: [// run in reverse order
+          { loader: 'style-loader' }, // second, inject into html
+          { loader: 'css-loader' } // first, lint and load css
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          // Using HTMLWebpackPlugin instead
+          // { loader: 'file-loader', options: { name: '[name].html' } }, // loads up html files
+          // { loader: 'extract-loader' }, // extract into a separate file
+          { loader: 'html-loader', options: { attrs: ['img:src']} } // lint and load html
+        ]
+      },
+      {
+        test: /\.(jpg|gif|png)$/,
+        use: [
+          { loader: 'file-loader', options: { name: 'images/[name].[ext]' }}
+        ]
+      }
+    ]
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HTMLWebpackPlugin({
+      template: './src/index.html'
+    })
+  ]
+};
+
+```
