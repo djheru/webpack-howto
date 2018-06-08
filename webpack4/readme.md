@@ -345,3 +345,46 @@ module.exports = {
 - Note how the node devtools switches to the "sources" tab and takes you to the breakpoint in code
 - Add `debugger;` to the client code. See the sources tab on the regular devtools does the thing
 
+
+## HTML Preprocessors
+
+#### EJS
+
+```
+touch src/index.ejs
+
+# In webpack.dev.js
+{
+    ...
+    ,
+      plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new HTMLWebpackPlugin({
+          template: './src/index.ejs',
+          title: 'Link\'s Journal'
+        })
+      ]
+}
+
+# In src/index.ejs:
+
+<html>
+<head>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+</head>
+<body>
+<div class="profile">
+    <img src="<%= require('./images/lg.png') %>" alt="">
+    <h1>OHAI Y'all</h1>
+</div>
+
+<script src="/main-bundle.js"></script>
+</body>
+</html>
+```
+
+#### Pug
+
+```
+npm i pug pug-loader
+```

@@ -51,7 +51,7 @@ module.exports = {
       {
         test: /\.(jpg|gif|png)$/,
         use: [
-          { loader: 'file-loader', options: { name: 'images/[name].[ext]' }}
+          { loader: 'file-loader', options: { name: 'images/[name]-[hash:8].[ext]' }}
         ]
       }
     ]
@@ -59,7 +59,8 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: './src/index.html'
+      template: './src/index.ejs',
+      title: 'Link\'s Journal'
     })
   ]
 };
