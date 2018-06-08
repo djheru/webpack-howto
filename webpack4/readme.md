@@ -420,3 +420,20 @@ plugins: [
     })
   ]
 ```
+
+## Handlebars
+
+```
+touch src/index.hbs
+Copy .ejs file, replace <%= %> with {{ }}; remove require from image
+npm i handlebars handlebars-loader
+
+# In webpack config loader
+,
+  {
+    test: /\.hbs/,
+    use: [
+      { loader: 'handlebars-loader', query: { inlineRequires: '/images/' } }
+    ]
+  }
+```

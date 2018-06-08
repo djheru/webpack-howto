@@ -59,13 +59,19 @@ module.exports = {
         use: [
           { loader: 'pug-loader' }
         ]
+      },
+      {
+        test: /\.hbs/,
+        use: [
+          { loader: 'handlebars-loader', query: { inlineRequires: '/images/' } }
+        ]
       }
     ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: './src/index.pug',
+      template: './src/index.hbs',
       title: 'Link\'s Journal'
     })
   ]
