@@ -53,13 +53,19 @@ module.exports = {
         use: [
           { loader: 'file-loader', options: { name: 'images/[name]-[hash:8].[ext]' }}
         ]
+      },
+      {
+        test: /\.pug/,
+        use: [
+          { loader: 'pug-loader' }
+        ]
       }
     ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: './src/index.ejs',
+      template: './src/index.pug',
       title: 'Link\'s Journal'
     })
   ]

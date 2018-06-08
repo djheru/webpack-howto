@@ -387,4 +387,36 @@ touch src/index.ejs
 
 ```
 npm i pug pug-loader
+touch src/index.pug
+
+#index.pug
+doctype html
+html
+    head
+        title
+            = htmlWebpackPlugin.options.title
+    body
+        .profile
+            img(src=require('./images/lg.png'))
+            h1
+                | OHAI Y'ALL!
+
+# webpack.dev.js
+# Under loaders:
+,
+  {
+    test: /\.pug/,
+    use: [
+      { loader: 'pug-loader' }
+    ]
+  }
+
+# Under plugins
+plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    new HTMLWebpackPlugin({
+      template: './src/index.pug',
+      title: 'Link\'s Journal'
+    })
+  ]
 ```
