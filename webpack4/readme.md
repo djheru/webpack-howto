@@ -479,3 +479,33 @@ npm i less less-loader
 ```
 npm i stylus stylus-loader
 ```
+
+#### PostCSS
+
+- `npm i postcss postcss-loader
+- PostCSS adds vendor css prefixes automatically
+
+```
+# In webpack config
+# Modify the e.g. stylus loader to add postcss
+{
+    test: /\.styl$/,
+    use: [// run in reverse order
+        { loader: 'style-loader' }, // 4th, inject into html
+        { loader: 'css-loader' }, // third, lint and load css
+        { loader: 'postcss-loader' }, // second, add autoprefixes
+        { loader: 'stylus-loader' } // first sass loader
+    ]
+},
+```
+- Add postcss config
+    - `touch postcss.config.js`
+
+```
+module.exports = {
+    plugins: [require('autoprefixer')]
+}
+```
+
+- Re-run the server
+    - See the prefixes?

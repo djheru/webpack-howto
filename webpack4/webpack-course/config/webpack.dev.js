@@ -58,8 +58,9 @@ module.exports = {
       {
         test: /\.styl$/,
         use: [// run in reverse order
-          { loader: 'style-loader' }, // third, inject into html
-          { loader: 'css-loader' }, // second, lint and load css
+          { loader: 'style-loader' }, // 4th, inject into html
+          { loader: 'css-loader' }, // third, lint and load css
+          { loader: 'postcss-loader' }, // second, add autoprefixes
           { loader: 'stylus-loader' } // first sass loader
         ]
       },
