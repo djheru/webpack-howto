@@ -468,3 +468,14 @@ require('./main.sass');
 - It is output as a <style> tag in the <head>
 - You can use `@import ./somefile` to import e.g. somefile.sass
 
+#### LESS
+
+```
+npm i less less-loader
+```
+
+#### Stylus
+
+```
+npm i stylus stylus-loader
+```

@@ -40,11 +40,27 @@ module.exports = {
         ]
       },
       {
+        test: /\.less$/,
+        use: [// run in reverse order
+          { loader: 'style-loader' }, // third, inject into html
+          { loader: 'css-loader' }, // second, lint and load css
+          { loader: 'less-loader' } // first less loader
+        ]
+      },
+      {
         test: /\.sass$/,
         use: [// run in reverse order
           { loader: 'style-loader' }, // third, inject into html
           { loader: 'css-loader' }, // second, lint and load css
-          { loader: 'sass-loader'} // first sass loader
+          { loader: 'sass-loader' } // first sass loader
+        ]
+      },
+      {
+        test: /\.styl$/,
+        use: [// run in reverse order
+          { loader: 'style-loader' }, // third, inject into html
+          { loader: 'css-loader' }, // second, lint and load css
+          { loader: 'stylus-loader' } // first sass loader
         ]
       },
       {
