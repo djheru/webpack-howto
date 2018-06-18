@@ -421,7 +421,7 @@ plugins: [
   ]
 ```
 
-## Handlebars
+#### Handlebars
 
 ```
 touch src/index.hbs
@@ -437,3 +437,34 @@ npm i handlebars handlebars-loader
     ]
   }
 ```
+
+## CSS Preprocessors
+
+#### SASS
+
+```
+npm i node-sass sass-loader
+
+touch src/main.sass
+
+# In main.js
+// require('./main.css');
+require('./main.sass');
+
+# in webpack config, add loader to rules
+
+,
+      {
+        test: /\.sass$/,
+        use: [// run in reverse order
+          { loader: 'style-loader' }, // third, inject into html
+          { loader: 'css-loader' }, // second, lint and load css
+          { loader: 'sass-loader'} // first sass loader
+        ]
+      }
+```
+
+- Copy css to sass and remove brackets and semis
+- It is output as a <style> tag in the <head>
+- You can use `@import ./somefile` to import e.g. somefile.sass
+

@@ -40,6 +40,14 @@ module.exports = {
         ]
       },
       {
+        test: /\.sass$/,
+        use: [// run in reverse order
+          { loader: 'style-loader' }, // third, inject into html
+          { loader: 'css-loader' }, // second, lint and load css
+          { loader: 'sass-loader'} // first sass loader
+        ]
+      },
+      {
         test: /\.html$/,
         use: [
           // Using HTMLWebpackPlugin instead
