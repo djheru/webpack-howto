@@ -467,3 +467,23 @@ server.listen(PORT, () => {
 	- Set up env vars
 - Run heroku locally
 	- `heroku local`
+
+### Handling CSS
+
+- Install plugin
+	- `npm i -S mini-css-extract-plugin`
+- Create a prod webpack config
+	- `cp config/webpack.dev.js config/webpack.prod.js`
+- Update the run scripts
+```JSON
+{
+	"build": "NODE_ENV=production webpack --config=config/webpack.prod.js",
+	"build:dev": "NODE_ENV=production webpack --config=config/webpack.dev.js"
+}
+```
+- Optimize CSS with plugin
+	- `npm install optimize-css-assets-webpack-plugin`
+
+```javascript
+
+```
