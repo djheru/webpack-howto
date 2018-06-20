@@ -437,3 +437,31 @@ npm i handlebars handlebars-loader
     ]
   }
 ```
+
+## Heroku deploy
+
+- Download the heroku cli from https://devcenter.heroku.com/articles/heroku-cli#download-and-install
+- After installing, login using the command `heroku login`
+- Create a Procfile
+	- `touch Procfile`
+- Add a new script to the package.json
+	- `"prod": "NODE_ENV=production node src/server/main.js"`
+- Add a new app to heroku
+	- `heroku create`
+	- This gives you the app name, url, and the git remote url
+- Add config variable to env vars
+	- `heroku config:set NODE_ENV=production -a app-name-12345`
+- Check variables
+	- `heroku config`
+- Update server to use heroku-defined port
+```javascript
+const PORT = process.env.PORT || 8001
+server.listen(PORT, () => {
+  console.log('server listening on port: ', PORT);
+});
+```
+- Run `npm run build` because heroku deploys from the dist folder
+- `touch .env`
+	- Set up env vars
+- Run heroku locally
+	- `heroku local`
