@@ -449,6 +449,8 @@ npm i handlebars handlebars-loader
 - Add a new app to heroku
 	- `heroku create`
 	- This gives you the app name, url, and the git remote url
+	- Set the git remote 
+		- `heroku git:remote --app app-name-12345`
 - Add config variable to env vars
 	- `heroku config:set NODE_ENV=production -a app-name-12345`
 - Check variables
