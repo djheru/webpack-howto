@@ -71,7 +71,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: './src/index.hbs',
+      template: './src/index.ejs',
       title: 'Link\'s Journal'
     })
   ]
