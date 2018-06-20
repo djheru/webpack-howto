@@ -1,23 +1,26 @@
 import express from 'express';
-import path from 'path';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import webpackHotMiddleware from 'webpack-hot-middleware';
-import config from '../../config/webpack.dev';
-
 const server = express();
 
-const compiler = webpack(config);
-const devMiddleware = webpackDevMiddleware(compiler, config.devServer);
-const hotMiddleware = webpackHotMiddleware(compiler);
-const staticMiddleware = express.static('dist');
+const isProd = process.env.NODE_ENV === 'production';
 
-// Needs to be dev, hot, static
-server.use(devMiddleware);
-server.use(hotMiddleware);
+if (!isProd) {
+  const webpack = require('webpack');
+  const config = require('../../config/webpack.dev');
+  const compiler = webpack(config);
+  const webpackDevMiddleware = require('webpack-dev-middleware');
+  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const devMiddleware = webpackDevMiddleware(compiler, config.devServer);
+  const hotMiddleware = webpackHotMiddleware(compiler);
+
+  // order needs to be dev, hot, static
+  server.use(devMiddleware);
+  server.use(hotMiddleware);
+}
+
+const staticMiddleware = express.static('dist');
 server.use(staticMiddleware);
-// debugger;
-const PORT = process.env.PORT || 8001
+
+const PORT = process.env.PORT || 8002
 server.listen(PORT, () => {
-  console.log('server listening on port: ', PORT);
+  console.log('server listening on port: ', PORT, process.env.NODE_ENV);
 });

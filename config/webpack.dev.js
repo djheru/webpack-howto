@@ -4,7 +4,10 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: [ './src/main.js' ]
+    main: [
+      'webpack-hot-middleware/client?reload=true',
+      './src/main.js'
+    ]
   },
   mode: 'development',
   output: {
@@ -19,8 +22,7 @@ module.exports = {
     overlay: true, // display errors on browser
     stats: {
       colors: true
-    },
-    hot: true
+    }
   },
   devtool: 'source-map',
   module: {
@@ -40,38 +42,18 @@ module.exports = {
         ]
       },
       {
-        test: /\.html$/,
-        use: [
-          // Using HTMLWebpackPlugin instead
-          // { loader: 'file-loader', options: { name: '[name].html' } }, // loads up html files
-          // { loader: 'extract-loader' }, // extract into a separate file
-          { loader: 'html-loader', options: { attrs: ['img:src']} } // lint and load html
-        ]
-      },
-      {
         test: /\.(jpg|gif|png)$/,
         use: [
           { loader: 'file-loader', options: { name: 'images/[name]-[hash:8].[ext]' }}
-        ]
-      },
-      {
-        test: /\.pug/,
-        use: [
-          { loader: 'pug-loader' }
-        ]
-      },
-      {
-        test: /\.hbs/,
-        use: [
-          { loader: 'handlebars-loader', query: { inlineRequires: '/images/' } }
         ]
       }
     ]
   },
   plugins: [
-    // new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
       template: './src/index.ejs',
+      inject: true,
       title: 'Link\'s Journal'
     })
   ]
