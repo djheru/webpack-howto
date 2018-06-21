@@ -3,6 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
+const MinifyPlugin = require('babel-minify-webpack-plugin');
 
 module.exports = env => { // passes the env vars in!
   return {
@@ -15,7 +16,6 @@ module.exports = env => { // passes the env vars in!
       path: path.resolve(__dirname, '../dist'),
       publicPath: '/'
     },
-    devtool: 'source-map',
     module: {
       rules: [
         {
@@ -73,7 +73,8 @@ module.exports = env => { // passes the env vars in!
       }),
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
-      })
+      }),
+      new MinifyPlugin()
     ]
   }
 };
