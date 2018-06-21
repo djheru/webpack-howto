@@ -345,3 +345,25 @@ module.exports = {
 - Note how the node devtools switches to the "sources" tab and takes you to the breakpoint in code
 - Add `debugger;` to the client code. See the sources tab on the regular devtools does the thing
 
+## Typescript
+
+```
+npm i typescript awesome-typescript-loader
+touch src/index.ts tsconfig.json
+
+# Add a new property to the entry object in webpack config:
+  entry: {
+    main: [ './src/main.js' ],
+    ts: ['./src/index.ts']
+  }
+
+# Add loader for TypeScript files
+  {
+    test: /\.ts$/,
+    use: [
+      { loader: 'awesome-typescript-loader' }
+    ],
+    exclude: /node_modules/
+  },
+
+# Add TS config
