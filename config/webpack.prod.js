@@ -3,8 +3,8 @@ const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const MinifyPlugin = require('babel-minify-webpack-plugin');
-
+// const MinifyPlugin = require('babel-minify-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = env => { // passes the env vars in!
   return {
     entry: {
@@ -74,7 +74,8 @@ module.exports = env => { // passes the env vars in!
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
       }),
-      new MinifyPlugin()
+      // new MinifyPlugin()
+      // new UglifyJSPlugin()
     ]
   }
 };

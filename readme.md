@@ -13,6 +13,10 @@ rm dist/main.js src/index.js
 touch config/webpack.dev.js
 ```
 
+#### Note:
+
+__Loaders are effective on one file at a time, plugins work on the whole bundle__
+
 ## Basic webpack options
 
 To run it: `npx webpack-dev-server --config=config/webpack.dev.js`
@@ -449,7 +453,7 @@ npm i handlebars handlebars-loader
 - Add a new app to heroku
 	- `heroku create`
 	- This gives you the app name, url, and the git remote url
-	- Set the git remote 
+	- Set the git remote
 		- `heroku git:remote --app app-name-12345`
 - Add config variable to env vars
 	- `heroku config:set NODE_ENV=production -a app-name-12345`
@@ -468,10 +472,12 @@ server.listen(PORT, () => {
 - Run heroku locally
 	- `heroku local`
 
-### Handling CSS
+### Handling CSS in Production
 
 - Install plugin
 	- `npm i -S mini-css-extract-plugin`
+	- Extracts the css from the bundle and loads it into a separate file
+	- Includes a loader to replace the style-loader
 - Create a prod webpack config
 	- `cp config/webpack.dev.js config/webpack.prod.js`
 - Update the run scripts
@@ -483,7 +489,38 @@ server.listen(PORT, () => {
 ```
 - Optimize CSS with plugin
 	- `npm install optimize-css-assets-webpack-plugin`
+	- minimizes, optimizes, gets rid of duplicate styles
 
 ```javascript
+// In webpack.prod.js
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
+{
+    ...,
+    plugins: [
+         new OptimizeCssAssetsPlugin(),
+         new MiniCSSExtractPlugin({
+           filename: '[name]-[contenthash].css'
+         }),
+          ...,
+      ]
+}
 ```
+
+
+### Handling JS in Production
+- Separate out development-centric code and add to the development webpack config entry main array
+- Use the define plugin to set up environment variables
+```
+new webpack.DefinePlugin({
+    'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV) // add vars as needed
+}),
+```
+- Change the config to be a function that takes env as the param. Now you have access to get the environment variables in the shell
+- Use the environment vars to do things like configure the dev server, etc
+- Use the environment vars to pass in secrets
+
+#### Minify/Uglify
+- `npm i -S uglifyjs-webpack-plugin`
+- Add the plugin to the prod config
+
