@@ -17,7 +17,9 @@ if (!isProd) {
   server.use(hotMiddleware);
 }
 
-const staticMiddleware = express.static('dist');
+//const staticMiddleware = express.static('dist');
+const enableBrotli = true;
+const staticMiddleware = require('express-static-gzip')('dist', { enableBrotli });
 server.use(staticMiddleware);
 
 const PORT = process.env.PORT || 8002

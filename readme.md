@@ -524,3 +524,46 @@ new webpack.DefinePlugin({
 - `npm i -S uglifyjs-webpack-plugin`
 - Add the plugin to the prod config
 
+#### Compression
+- `npm i -S compression-webpack-plugin`
+- Add to the prod config
+```
+const CompressionPlugin = require('compression-webpack-plugin');
+...
+plugins: [
+  ...,
+  new CompressionPlugin({
+    algorithm: 'gzip'
+  })
+```
+
+__Output__
+```
+                           Asset       Size  Chunks             Chunk Names
+          images/lg-928d9297.png    176 KiB          [emitted]
+   main-bf4d76127a2c1d7acbdd.css  314 bytes       0  [emitted]  main
+                  main-bundle.js   7.56 KiB       0  [emitted]  main
+                      index.html  344 bytes          [emitted]
+main-bf4d76127a2c1d7acbdd.css.gz  236 bytes          [emitted]
+                   index.html.gz  237 bytes          [emitted]
+               main-bundle.js.gz   2.74 KiB          [emitted]
+
+```
+
+__Serve GZipped Assets with Express__
+`npm i -S express-static-gzip`
+```
+//const staticMiddleware = express.static('dist');
+const staticMiddleware = require('express-static-gzip')('dist');
+server.use(staticMiddleware);
+```
+
+__Use Brotli Compression__
+`npm i -S brotli-webpack-plugin`
+
+```
+//const staticMiddleware = express.static('dist');
+const enableBrotli = true;
+const staticMiddleware = require('express-static-gzip')('dist', { enableBrotli });
+server.use(staticMiddleware);
+```

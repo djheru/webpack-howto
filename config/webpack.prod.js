@@ -5,6 +5,9 @@ const HTMLWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 // const MinifyPlugin = require('babel-minify-webpack-plugin');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
+const BrotliPlugin = require('brotli-webpack-plugin');
+
 module.exports = env => { // passes the env vars in!
   return {
     entry: {
@@ -75,7 +78,11 @@ module.exports = env => { // passes the env vars in!
         'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
       }),
       // new MinifyPlugin()
-      // new UglifyJSPlugin()
+      new UglifyJSPlugin(),
+      new CompressionPlugin({
+        algorithm: 'gzip'
+      }),
+      new BrotliPlugin()
     ]
   }
 };
