@@ -1,0 +1,6 @@
+a {
+	color: white;
+	padding: 10px 20px;
+	cursor: pointer;
+}
+/*It will optimize the css, removing duplicate styles*/
