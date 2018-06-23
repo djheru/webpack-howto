@@ -349,6 +349,11 @@ module.exports = {
 - Note how the node devtools switches to the "sources" tab and takes you to the breakpoint in code
 - Add `debugger;` to the client code. See the sources tab on the regular devtools does the thing
 
+## Adding react with hot loading
+
+```
+npm i react react-dom babel-preset-react react-hot-loader@4
+
 
 ## HTML Preprocessors
 
