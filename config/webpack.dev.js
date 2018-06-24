@@ -1,11 +1,14 @@
 const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
     main: [
+      'react-hot-loader/patch',
       'babel-runtime/regenerator',
+      'babel-register',
       'webpack-hot-middleware/client?reload=true',
       './src/main.js'
     ]
@@ -65,6 +68,9 @@ module.exports = {
       template: './src/index.ejs',
       inject: true,
       title: 'Link\'s Journal'
+    }),
+    new BundleAnalyzerPlugin({
+      generateStatsFile: true
     })
   ]
 };

@@ -573,7 +573,7 @@ const staticMiddleware = require('express-static-gzip')('dist', { enableBrotli }
 server.use(staticMiddleware);
 ```
 
-#### Markdown
+### Markdown
 
 - `npm i -S markdown-with-front-matter-loader`
 ```
@@ -609,3 +609,11 @@ import markdownData from '../../data/post.md'
       </div>
   </div>
 ```
+
+### SplitChunks and Bundle Analyzer
+
+- Analyze bundles
+- Separate chunks that change often from chunks that don't
+- `npm i -S webpack-bundle-analyzer`
+- In webpack.dev plugins: `new BundleAnalyzerPlugin({generateStatsFile: true})
+- Run dev, see the new page at localhost:8888 with bundle stats
