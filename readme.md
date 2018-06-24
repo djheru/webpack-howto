@@ -572,3 +572,40 @@ const enableBrotli = true;
 const staticMiddleware = require('express-static-gzip')('dist', { enableBrotli });
 server.use(staticMiddleware);
 ```
+
+#### Markdown
+
+- `npm i -S markdown-with-front-matter-loader`
+```
+// In webpack configs
+
+```
+,
+      {
+        test: /\.md$/,
+        use: [
+          { loader: 'markdown-with-front-matter-loader' }
+        ]
+      }
+```
+// In post.md
+---
+title: Our First Post
+author: Link
+---
+# Long ago in the kingdom of Hyrule
+
+Our hero wakes up. He is alone. He must find his sword.
+
+```
+
+```
+// In AppRoot.js
+import markdownData from '../../data/post.md'
+  <div className="profile">
+    <img src={ require('../images/lg.png') } alt="" />
+      <h1>{ markdownData.title }</h1>
+      <div className="content" dangerouslySetInnerHTML={{ __html: markdownData.__content }}>
+      </div>
+  </div>
+```

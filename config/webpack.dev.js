@@ -47,6 +47,12 @@ module.exports = {
         use: [
           { loader: 'file-loader', options: { name: 'images/[name]-[hash:8].[ext]' }}
         ]
+      },
+      {
+        test: /\.md$/,
+        use: [
+          { loader: 'markdown-with-front-matter-loader' }
+        ]
       }
     ]
   },

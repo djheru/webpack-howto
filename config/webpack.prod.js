@@ -41,6 +41,12 @@ module.exports = env => { // passes the env vars in!
           use: [
             { loader: 'file-loader', options: { name: 'images/[name].[ext]' }}
           ]
+        },
+        {
+          test: /\.md$/,
+          use: [
+            { loader: 'markdown-with-front-matter-loader' }
+          ]
         }
       ]
     },
