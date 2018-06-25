@@ -1,4 +1,8 @@
 import express from 'express';
+import React from 'react';
+import ReactDOMServer from 'react-dom/server';
+import AppRoot from '../components/AppRoot';
+
 const server = express();
 
 const isProd = process.env.NODE_ENV === 'production';
@@ -23,6 +27,25 @@ if (!isProd) {
 const enableBrotli = true;
 const staticMiddleware = require('express-static-gzip')('dist', { enableBrotli });
 server.use(staticMiddleware);
+
+server.get('*', (req, res) => {
+  const html = ReactDOMServer.renderToString(<div>HELLO SSR!</div>);
+  res.send(`
+  <html>
+  <head>
+      <link href="/main.css" rel="stylesheet"/>
+  </head>
+  <body>
+  
+  <div id="react-root">
+    ${ReactDOMServer.renderToString(<AppRoot/>)}
+  </div>
+  <script src="vendor-bundle.js"></script>
+  <script src="main-bundle.js"></script>
+  </body>
+</html>
+  `);
+});
 
 const PORT = process.env.PORT || 8002;
 server.listen(PORT, () => {

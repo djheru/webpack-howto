@@ -11,8 +11,8 @@ const MiniCSSExtractPlugin = require("mini-css-extract-plugin")
 module.exports = env => {
   return {
     entry: {
-      main: ["./src/main.js"],
-      main2: ["./src/main2.js"]
+      vendor: ['react', 'react-dom'],
+      main: ["./src/main.js"]
     },
     mode: "production",
     output: {
@@ -80,13 +80,11 @@ module.exports = env => {
           NODE_ENV: JSON.stringify(env.NODE_ENV)
         }
       }),
-      new HTMLWebpackPlugin({
+      /*new HTMLWebpackPlugin({
         template: "./src/index.ejs",
-        filename: "index.html",
         inject: true,
-        title: "Link's Journal",
-        chunks: ["vendor", "main"]
-      }),
+        title: "Link's Journal"
+      }),*/
       // new HTMLWebpackPlugin({
       //   template: "./src/index.ejs",
       //   filename: "blog.html",
