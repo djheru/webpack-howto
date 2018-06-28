@@ -1,45 +1,52 @@
-import express from 'express';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import AppRoot from '../components/AppRoot';
-import webpack from 'webpack';
-import configDevClient from '../../config/webpack.dev-client';
-import configDevServer from '../../config/webpack.dev-server';
-import configProdClient from '../../config/webpack.prod-client';
-import configProdServer from '../../config/webpack.prod-server';
+import express from "express"
 
-const server = express();
+const server = express()
+import path from "path"
 
-const isProd = process.env.NODE_ENV === 'production';
+const expressStaticGzip = require("express-static-gzip")
+import webpack from "webpack"
 
-if (!isProd) {
+import configDevClient from "../../config/webpack.dev-client.js"
+import configDevServer from "../../config/webpack.dev-server.js"
+import configProdClient from "../../config/webpack.prod-client.js"
+import configProdServer from "../../config/webpack.prod-server.js"
 
-  const compiler = webpack([configDevClient, configDevServer]);
-  const clientCompiler = compiler.compilers[0];
-  const serverCompiler = compiler.compilers[1];
+const isProd = process.env.NODE_ENV === "production"
+const isDev = !isProd
+if (isDev) {
+  const compiler = webpack([configDevClient, configDevServer])
 
-  const webpackDevMiddleware = require('webpack-dev-middleware');
-  const webpackHotMiddleware = require('webpack-hot-middleware');
+  const clientCompiler = compiler.compilers[0]
+  const serverCompiler = compiler.compilers[1]
 
-  const devMiddleware = webpackDevMiddleware(compiler, configDevClient.devServer);
-  const hotMiddleware = webpackHotMiddleware(clientCompiler, configDevClient.devServer);
+  // require("webpack-mild-compile")(compiler)
 
-  // order needs to be dev, hot, static
-  server.use(devMiddleware);
-  server.use(hotMiddleware);
-  console.log('DEV Middleware Enabled');
+  const webpackDevMiddleware = require("webpack-dev-middleware")(
+    compiler,
+    configDevClient.devServer
+  )
+
+  const webpackHotMiddlware = require("webpack-hot-middleware")(
+    clientCompiler,
+    configDevClient.devServer
+  )
+
+  server.use(webpackDevMiddleware)
+  server.use(webpackHotMiddlware)
+  console.log("Middleware enabled")
 } else {
-  const render = require('./render');
-//const staticMiddleware = express.static('dist');
-  const enableBrotli = true;
-  const staticMiddleware = require('express-static-gzip')('dist', { enableBrotli });
-  server.use(staticMiddleware);
-
-  server.use(render());
-
+  const render = require("./render.js")
+  server.use(
+    expressStaticGzip("dist", {
+      enableBrotli: true
+    })
+  )
+  server.use(render())
 }
 
-const PORT = process.env.PORT || 8002;
+const PORT = 8080
 server.listen(PORT, () => {
-  console.log('server listening on port: ', PORT, process.env.NODE_ENV);
-});
+  console.log(
+    `Server listening on http://localhost:${PORT} in ${process.env.NODE_ENV}`
+  )
+})

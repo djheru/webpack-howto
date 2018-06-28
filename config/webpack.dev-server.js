@@ -1,18 +1,18 @@
-const path = require('path');
-const webpack = require('webpack');
-const nodeExternals = require('webpack-node-externals');
+const path = require("path")
+const webpack = require("webpack")
+var nodeExternals = require("webpack-node-externals")
 
 module.exports = {
-  name: 'server',
-  target: 'node',
+  name: "server",
+  target: "node",
   externals: nodeExternals(),
   entry: {
-    server: ['./src/server/render.js']
+    server: ["./src/server/render.js"]
   },
-  mode: 'development',
+  mode: "development",
   output: {
-    filename: '[name]-bundle.js',
-    path: path.resolve(__dirname, '../build')
+    filename: "[name]-bundle.js",
+    path: path.resolve(__dirname, "../build")
   },
   module: {
     rules: [
@@ -21,29 +21,21 @@ module.exports = {
         exclude: /node_modules/,
         use: [
           {
-            loader: 'babel-loader'
+            loader: "babel-loader"
           }
         ]
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          }
-        })
+        use: "css-loader"
       },
       {
-        test: /\.jpg|gif|png$/,
+        test: /\.(jpg|gif|png)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              name: 'images/[name].[ext]',
+              name: "images/[name].[ext]",
               emitFile: false
             }
           }
@@ -53,7 +45,7 @@ module.exports = {
         test: /\.md$/,
         use: [
           {
-            loader: 'markdown-with-front-matter-loader'
+            loader: "markdown-with-front-matter-loader"
           }
         ]
       }
@@ -61,10 +53,9 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify('development')
+      "process.env": {
+        NODE_ENV: JSON.stringify("development")
       }
     })
   ]
-
-};
+}

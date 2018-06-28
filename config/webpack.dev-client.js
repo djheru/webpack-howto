@@ -1,54 +1,61 @@
-const path = require('path');
-const webpack = require('webpack');
-const HTMLWebpackPlugin = require('html-webpack-plugin');
+const path = require("path")
+const webpack = require("webpack")
+const HTMLWebpackPlugin = require("html-webpack-plugin")
 
 module.exports = {
-  name: 'client',
+  name: "client",
   entry: {
-    vendor: ['react', 'react-dom'],
+    vendor: ["react", "react-dom"],
     main: [
-      'react-hot-loader/patch',
-      'babel-runtime/regenerator',
-      'webpack-hot-middleware/client?reload=true',
-      './src/main.js'
+      "react-hot-loader/patch",
+      "babel-runtime/regenerator",
+      "webpack-hot-middleware/client?reload=true",
+      "./src/main.js"
     ]
   },
-  mode: 'development',
+  mode: "development",
   output: {
-    filename: '[name]-bundle.js',
-    path: path.resolve(__dirname, '../dist'),
-    publicPath: '/'
+    filename: "[name]-bundle.js",
+    path: path.resolve(__dirname, "../dist"),
+    publicPath: "/"
   },
   devServer: {
-    contentBase: 'dist',
-    port: 8000,
-    publicPath: '/',
-    overlay: true, // display errors on browser
+    contentBase: "dist",
+    overlay: true,
     stats: {
       colors: true
     }
   },
-  devtool: 'source-map',
+  devtool: "source-map",
   module: {
     rules: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         use: [
-          { loader: 'babel-loader' }
-        ],
-        exclude: /node_modules/
+          {
+            loader: "babel-loader"
+          }
+        ]
       },
       {
         test: /\.css$/,
-        use: [// run in reverse order
-          { loader: 'style-loader' }, // second, inject into html
-          { loader: 'css-loader' } // first, lint and load css
+        use: [
+          {
+            loader: "style-loader"
+          },
+          { loader: "css-loader" }
         ]
       },
       {
         test: /\.(jpg|gif|png)$/,
         use: [
-          { loader: 'file-loader', options: { name: 'images/[name].[ext]' }}
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[ext]"
+            }
+          }
         ]
       },
       {
@@ -72,20 +79,25 @@ module.exports = {
       {
         test: /\.md$/,
         use: [
-          { loader: 'markdown-with-front-matter-loader' }
+          {
+            loader: "markdown-with-front-matter-loader"
+          }
         ]
       }
     ]
   },
   plugins: [
     new webpack.DefinePlugin({
-      "process.env.NODE_ENV": JSON.stringify("development")
+      "process.env": {
+        NODE_ENV: JSON.stringify("development"),
+        WEBPACK: true
+      }
     }),
     new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
-      template: './src/index.ejs',
+      template: "./src/index.ejs",
       inject: true,
-      title: 'Link\'s Journal'
+      title: "Link's Journal"
     })
   ]
-};
+}

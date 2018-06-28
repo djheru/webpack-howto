@@ -1,23 +1,25 @@
-import React, { Component } from 'react';
-const markdownData = require("../../data/post.md");
-const imagePath = require("../images/lg.png");
+import React from "react"
 
-class AppRoot extends Component {
+const MarkdownData = require("../../data/post.md")
+const imagePath = require("../images/link.jpg")
+// const imagePath = require("../images/lg.png")
+
+export default class extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {};
+    super(props)
+    this.state = {}
   }
 
   render() {
     return (
       <div className="profile">
-        <img src={ imagePath } alt="" />
-        <h1>{ markdownData.title }</h1>
-        <div className="content" dangerouslySetInnerHTML={{ __html: markdownData.__content }}>
-        </div>
+        <img src={ imagePath }/>
+        <h1>{ MarkdownData.title }</h1>
+        <div
+          className="content"
+          dangerouslySetInnerHTML={ { __html: MarkdownData.__content } }
+        />
       </div>
-    );
+    )
   }
 }
-
-export default AppRoot;
