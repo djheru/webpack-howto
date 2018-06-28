@@ -9,7 +9,6 @@ module.exports = {
     main: [
       'react-hot-loader/patch',
       'babel-runtime/regenerator',
-      'babel-register',
       'webpack-hot-middleware/client?reload=true',
       './src/main.js'
     ]
@@ -79,10 +78,10 @@ module.exports = {
     ]
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
     }),
+    new webpack.HotModuleReplacementPlugin(),
     new HTMLWebpackPlugin({
       template: './src/index.ejs',
       inject: true,
