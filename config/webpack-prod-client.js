@@ -10,6 +10,7 @@ const MiniCSSExtractPlugin = require("mini-css-extract-plugin")
 
 module.exports = env => {
   return {
+    name: 'client',
     entry: {
       vendor: ['react', 'react-dom'],
       main: ["./src/main.js"]

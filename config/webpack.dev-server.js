@@ -5,6 +5,7 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = env => {
   return {
+    name: 'server',
     entry: {
       server: ['./src/server/main.js']
     },
