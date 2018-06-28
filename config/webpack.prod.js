@@ -80,18 +80,6 @@ module.exports = env => {
           NODE_ENV: JSON.stringify(env.NODE_ENV)
         }
       }),
-      /*new HTMLWebpackPlugin({
-        template: "./src/index.ejs",
-        inject: true,
-        title: "Link's Journal"
-      }),*/
-      // new HTMLWebpackPlugin({
-      //   template: "./src/index.ejs",
-      //   filename: "blog.html",
-      //   inject: true,
-      //   chunks: ["vendor", "main2"],
-      //   title: "Blog"
-      // }),
       new UglifyJSPlugin(),
       new CompressionPlugin({
         algorithm: "gzip"
@@ -99,4 +87,4 @@ module.exports = env => {
       new BrotliPlugin()
     ]
   }
-}
+};

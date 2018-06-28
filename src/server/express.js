@@ -33,6 +33,7 @@ server.get('*', (req, res) => {
   res.send(`
   <html>
   <head>
+      <title>My Balls</title>
       <link href="/main.css" rel="stylesheet"/>
   </head>
   <body>

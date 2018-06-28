@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
   entry: {
@@ -49,7 +48,25 @@ module.exports = {
       {
         test: /\.(jpg|gif|png)$/,
         use: [
-          { loader: 'file-loader', options: { name: 'images/[name]-[hash:8].[ext]' }}
+          { loader: 'file-loader', options: { name: 'images/[name].[ext]' }}
+        ]
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "[name].[ext]"
+            }
+          },
+          { loader: "extract-loader" },
+          {
+            loader: "html-loader",
+            options: {
+              attrs: ["img:src"]
+            }
+          }
         ]
       },
       {
@@ -65,13 +82,10 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development")
     }),
-    /*new HTMLWebpackPlugin({
+    new HTMLWebpackPlugin({
       template: './src/index.ejs',
       inject: true,
       title: 'Link\'s Journal'
-    }),*/
-    new BundleAnalyzerPlugin({
-      generateStatsFile: true
     })
   ]
 };
