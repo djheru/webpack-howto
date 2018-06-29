@@ -1,8 +1,6 @@
 import express from "express"
-
 const server = express()
 import path from "path"
-
 const expressStaticGzip = require("express-static-gzip")
 import webpack from "webpack"
 

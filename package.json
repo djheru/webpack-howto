@@ -1,16 +1,10 @@
 {
   "name": "webpack-course",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
-  "scripts": {
-    "dev": "nodemon --inspect --watch config --watch src/server src/server/main.js",
-    "prod": "NODE_ENV=production node src/server/main.js",
-    "heroku-postbuild": "npm run build"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Webpack: Beyond the Basics Course",
+  "repository": "https://github.com/lawwantsin/webpack-course.git",
+  "license": "MIT",
   "dependencies": {
     "ajv": "^6.4.0",
     "babel-cli": "*",
@@ -49,5 +43,9 @@
     "webpack-hot-middleware": "2.21.0",
     "webpack-mild-compile": "^2.0.0",
     "webpack-node-externals": "^1.7.2"
+  },
+  "scripts": {
+    "prod": "NODE_ENV=production node src/server/main.js",
+    "dev": "nodemon --watch src/server --watch config --inspect src/server/main"
   }
 }
