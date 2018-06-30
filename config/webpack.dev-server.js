@@ -1,7 +1,6 @@
 const path = require("path")
 const webpack = require("webpack")
 var nodeExternals = require("webpack-node-externals")
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   name: "server",
@@ -12,7 +11,7 @@ module.exports = {
   output: {
     filename: "dev-server-bundle.js",
     path: path.resolve(__dirname, "../build"),
-    libraryTarget: 'commonjs2'
+    libraryTarget: "commonjs2"
   },
   module: {
     rules: [
@@ -27,18 +26,10 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          }
-        })
+        use: "css-loader"
       },
       {
-        test: /\.(jpg|gif|png)$/,
+        test: /\.jpg$/,
         use: [
           {
             loader: "file-loader",
@@ -60,7 +51,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development")

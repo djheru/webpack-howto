@@ -1,7 +1,5 @@
 const path = require("path")
 const webpack = require("webpack")
-const HTMLWebpackPlugin = require("html-webpack-plugin")
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   name: "client",
@@ -41,18 +39,15 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: {
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          }
-        })
+        use: [
+          {
+            loader: "style-loader"
+          },
+          { loader: "css-loader" }
+        ]
       },
       {
-        test: /\.(jpg|gif|png)$/,
+        test: /\.jpg$/,
         use: [
           {
             loader: "file-loader",
@@ -91,7 +86,6 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development"),

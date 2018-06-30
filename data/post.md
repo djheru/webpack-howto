@@ -1,12 +1,8 @@
 ---
-title: Our First Post
+title: Our first Post
 author: Link
 ---
 
-# Long ago in the kingdom of Hyrule
+# Long Ago in the Kingdom of Hyrule
 
-Our hero wakes up.
-
-He is alone.
-
-He must find his sword.
+Our Hero wakes up. He is alone. He must find his sword.
