@@ -11,6 +11,8 @@ import configDevServer from "../../config/webpack.dev-server.js"
 import configProdClient from "../../config/webpack.prod-client.js"
 import configProdServer from "../../config/webpack.prod-server.js"
 
+import webpackHotServerMiddleware from 'webpack-hot-server-middleware';
+
 const isProd = process.env.NODE_ENV === "production"
 const isDev = !isProd
 if (isDev) {
@@ -33,6 +35,7 @@ if (isDev) {
 
   server.use(webpackDevMiddleware)
   server.use(webpackHotMiddlware)
+  server.use(webpackHotServerMiddleware(compiler, {serverSideRender: true}))
   console.log("Middleware enabled")
 } else {
   const render = require("./render.js")
