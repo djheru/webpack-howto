@@ -1,5 +1,6 @@
 const path = require("path")
 const webpack = require("webpack")
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   name: "client",
@@ -15,6 +16,7 @@ module.exports = {
   mode: "development",
   output: {
     filename: "[name]-bundle.js",
+    chunkFilename: '[name].js',
     path: path.resolve(__dirname, "../dist"),
     publicPath: "/"
   },
@@ -86,12 +88,14 @@ module.exports = {
     ]
   },
   plugins: [
+    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development"),
         WEBPACK: true
       }
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin()
   ]
 }
