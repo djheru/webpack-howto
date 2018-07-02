@@ -12,6 +12,21 @@ import configProdServer from "../../config/webpack.prod-server.js"
 
 const isProd = process.env.NODE_ENV === "production"
 const isDev = !isProd
+const PORT = process.env.PORT || 8080
+let isBuilt = false
+
+const done = () => {
+  !isBuilt &&
+    server.listen(PORT, () => {
+      isBuilt = true
+      console.log(
+        `Server listening on http://localhost:${PORT} in ${
+          process.env.NODE_ENV
+        }`
+      )
+    })
+}
+
 if (isDev) {
   const compiler = webpack([configDevClient, configDevServer])
 
@@ -32,21 +47,22 @@ if (isDev) {
   server.use(webpackHotMiddlware)
   server.use(webpackHotServerMiddleware(compiler))
   console.log("Middleware enabled")
+  done()
 } else {
   webpack([configProdClient, configProdServer]).run((err, stats) => {
+    const clientStats = stats.toJson().children[0]
     const render = require("../../build/prod-server-bundle.js").default
+    console.log(
+      stats.toString({
+        colors: true
+      })
+    )
     server.use(
       expressStaticGzip("dist", {
         enableBrotli: true
       })
     )
-    server.use(render())
+    server.use(render({ clientStats }))
+    done()
   })
 }
-
-const PORT = 8080
-server.listen(PORT, () => {
-  console.log(
-    `Server listening on http://localhost:${PORT} in ${process.env.NODE_ENV}`
-  )
-})

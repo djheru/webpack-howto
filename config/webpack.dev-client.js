@@ -1,6 +1,5 @@
 const path = require("path")
 const webpack = require("webpack")
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
   name: "client",
@@ -16,13 +15,14 @@ module.exports = {
   mode: "development",
   output: {
     filename: "[name]-bundle.js",
-    chunkFilename: '[name].js',
+    chunkFilename: "[name].js",
     path: path.resolve(__dirname, "../dist"),
     publicPath: "/"
   },
   devServer: {
     contentBase: "dist",
     overlay: true,
+    hot: true,
     stats: {
       colors: true
     }
@@ -41,12 +41,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: [
-          {
-            loader: "style-loader"
-          },
-          { loader: "css-loader" }
-        ]
+        use: ["style-loader", "css-loader"]
       },
       {
         test: /\.jpg$/,
@@ -55,24 +50,6 @@ module.exports = {
             loader: "file-loader",
             options: {
               name: "images/[name].[ext]"
-            }
-          }
-        ]
-      },
-      {
-        test: /\.html$/,
-        use: [
-          {
-            loader: "file-loader",
-            options: {
-              name: "[name].[ext]"
-            }
-          },
-          { loader: "extract-loader" },
-          {
-            loader: "html-loader",
-            options: {
-              attrs: ["img:src"]
             }
           }
         ]
@@ -88,14 +65,12 @@ module.exports = {
     ]
   },
   plugins: [
-    new ExtractTextPlugin('[name].css'),
     new webpack.DefinePlugin({
       "process.env": {
         NODE_ENV: JSON.stringify("development"),
         WEBPACK: true
       }
     }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NamedModulesPlugin()
+    new webpack.HotModuleReplacementPlugin()
   ]
 }
