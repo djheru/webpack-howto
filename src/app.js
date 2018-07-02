@@ -11,6 +11,8 @@ function render(Component) {
     document.getElementById("react-root")
   )
 }
+
+debugger;
 render(AppRoot)
 
 if (module.hot) {

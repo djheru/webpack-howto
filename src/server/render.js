@@ -13,6 +13,7 @@ export default ({ clientStats }) => (req, res) => {
   const context = {
     site: req
   }
+  debugger;
 
   res.send(`
     <html>
